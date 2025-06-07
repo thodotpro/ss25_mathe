@@ -1,4 +1,3 @@
-from tools.tools import Tools
 from agent.agent import Agent
 
 # # Direct tool usage
