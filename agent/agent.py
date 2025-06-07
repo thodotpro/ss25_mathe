@@ -92,7 +92,36 @@ class Agent:
                 action_arg = action_match.group(2).strip()
                 tool = self.tools.get(action_name)
                 if tool:
-                    observation = tool.run(action_arg)
+                    # Special handling for tools that expect a dict
+                    if action_name == "plot_2d":
+                        import numpy as np
+                        match = re.match(r"(.+) for x in range\((.+)\)", action_arg)
+                        if match:
+                            func_str = match.group(1).strip()
+                            range_args = [int(v) for v in match.group(2).split(",")]
+                            x = list(range(*range_args))
+                            allowed_names = {k: getattr(np, k) for k in dir(np) if not k.startswith("_")}
+                            y = [eval(func_str, {"__builtins__": {}}, dict(allowed_names, x=xi)) for xi in x]
+                            params = {"x": x, "y": y}
+                            observation = tool.run(params)
+                        else:
+                            observation = "Error: Could not parse plot_2d input."
+                    elif action_name in ["symbolic_math", "numeric_math", "plot_3d"]:
+                        # Minimal parser for symbolic_math: e.g. "integrate(x*y**2, x, y)"
+                        match = re.match(r"(integrate|differentiate|diff)\((.*)\)", action_arg)
+                        if match:
+                            op = match.group(1)
+                            rest = match.group(2)
+                            parts = [p.strip() for p in rest.split(',')]
+                            expr = parts[0]
+                            variables = [v for v in parts[1:]]
+                            params = {"operation": op, "expression": expr, "variables": variables}
+                            observation = tool.run(params)
+                        else:
+                            # Fallback: pass as expression only
+                            observation = tool.run({"expression": action_arg})
+                    else:
+                        observation = tool.run(action_arg)
                     tools_used.add(action_name)
                 else:
                     observation = f"Error: Unknown tool '{action_name}'"
