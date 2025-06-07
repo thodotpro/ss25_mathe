@@ -1,6 +1,8 @@
-# SS25 Mathematik KI-Agent
+# toolagentlab
 
-This project is a modular, extensible Python agent for solving mathematical tasks using the Google Gemini API and custom tools. It is designed for E-Learning assignments and presentations, supporting step-by-step reasoning, tool use, and easy integration with Jupyter notebooks.
+This project is a modular, extensible Python agent for solving mathematical tasks using the Google Gemini API and custom tools.
+
+> **System prompt and agent loop inspired by the Python ReAct pattern from [Simon Willison's blog](https://til.simonwillison.net/llms/python-react-pattern).**
 
 ## Features
 - OOP-style agent with ReAct loop (Thought → Action → Observation → Answer)
@@ -36,7 +38,6 @@ This project is a modular, extensible Python agent for solving mathematical task
 ## Usage
 - **Direct tool usage:** See `testing.py` for examples of calling the calculate tool directly.
 - **Agent usage:** Call the agent with a query; it will reason, use the calculate tool, and return an answer.
-- **Notebook presentation:** Use or generate a Jupyter notebook for step-by-step results and visualizations.
 
 ## Tools
 - `calculate`: Simple math expressions (Python syntax)
