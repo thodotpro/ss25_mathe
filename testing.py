@@ -15,3 +15,9 @@ agent = Agent()
 query = "What is 2 + 2?"
 result = agent(query)
 print(f"\nAgent usage:\nQuery: {query}\nResult: {result}")
+
+
+# Agent with Plotting Tool
+query_plot = "Plot the function y = x^2 for x in range(-10, 11)"
+result_plot = agent(query_plot)
+print(f"\nAgent usage with Plotting Tool:\nQuery: {query_plot}\nResult: {result_plot}")

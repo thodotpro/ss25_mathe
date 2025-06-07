@@ -16,7 +16,7 @@ client = genai.Client(
 
 system_prompt_path = "docs/system_prompt.txt" # Path to the system prompt file
 
-# temperature = 0.1  # Temperature for the model, can be adjusted as needed
+# temperature = 0.1  # set model temperature
 
 def system_prompt() -> str:
     """
@@ -31,7 +31,7 @@ class Agent:
     def __init__(self, client=client, system=system_prompt()) -> None:
         self.client = client
         self.system = system
-        self.formatter = GeminiFormatter  # Use the class, not an instance
+        self.formatter = GeminiFormatter    # adapter for google gemini
         self.messages = []
         self.tools = Tools.get_tools()
         
