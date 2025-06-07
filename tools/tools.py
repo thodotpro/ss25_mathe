@@ -1,4 +1,7 @@
 from tools.calculate_math_tool import CalculateMathTool
+from tools.plotting_tool import PlottingTool2D, PlottingTool3D
+from tools.symbolic_math_tool import SymbolicMathTool
+from tools.numeric_math_tool import NumericMathTool
 
 
 class Tools:
@@ -15,4 +18,8 @@ class Tools:
 
 # Register the calculate tool
 Tools.register_tool(CalculateMathTool)
+Tools.register_tool(PlottingTool2D)
+Tools.register_tool(PlottingTool3D)
+Tools.register_tool(SymbolicMathTool)
+Tools.register_tool(NumericMathTool)
 

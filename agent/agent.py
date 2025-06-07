@@ -8,7 +8,11 @@ from tools.gemini_formatter import GeminiFormatter
 
 load_dotenv()   # load api-key from .env file, comment this line if you want to use a hardcoded API key
 
+# Set up model and parameters
 model  = "gemini-2.0-flash" # Model to use, can be changed as needed
+max_tokens = 1024  # Maximum number of tokens for the response, can be adjusted
+top_p = 0.95  # Top-p sampling for response generation, can be adjusted
+top_k = 40  # Top-k sampling for response generation, can be adjusted
 
 client = genai.Client(
     api_key=os.environ.get("GOOGLE_API_KEY"),
@@ -16,7 +20,7 @@ client = genai.Client(
 
 system_prompt_path = "docs/system_prompt.txt" # Path to the system prompt file
 
-# temperature = 0.1  # set model temperature
+temperature = 0.1  # set model temperature
 
 def system_prompt() -> str:
     """
@@ -50,6 +54,10 @@ class Agent:
         response = self.client.models.generate_content(
             model=model,
             contents=formatted_content,
+            max_output_tokens=max_tokens,
+            temperature=temperature,
+            top_p=top_p, 
+            top_k=top_k,  
         )
 
         self.messages.append({"role": "assistant", "content": response.text})
